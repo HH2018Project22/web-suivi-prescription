@@ -6,8 +6,8 @@
   <section class="container-fluid">
     <section class="row">
       <section class="col-sm-6">
-        <h1><span class="badge badge-success">Priorité normale</span> Prescription n°<strong>{opts.identificationKey}</strong></h1>
-        <p class="h4"><small class="text-muted"><i class="fas fa-user-md mr-2"></i>Docteur anesthésite John Doe - Chirurgie</small></p>
+        <h1><span class="badge badge-success">Priorité normale</span> Prescription n°<strong>{prescription.order.id}</strong></h1>
+        <p class="h4"><small class="text-muted"><i class="fas fa-user-md mr-2"></i>Docteur anesthésite John Doe - Chirurgie - CHU de DIJON</small></p>
       </section>
       <section class="col-sm-3 offset-sm-3 mb-4">
         <div class="card">
@@ -68,16 +68,42 @@
     </section>
   </section>
   <script>
+    this.identificationKey;
+    this.prescription = 
+      { 
+          patient: {
+            firstName: "Jane",
+            lastName: "Doe",
+            useName: "Doe",
+            birthDate: "1988-01-01",
+            sex: "female"
+          },
+          prescriptor: {
+            firstName: "Doctor",
+            lastName: "Who",
+            service: "Time Lords"
+          },
+          order: {
+            id: '',
+            amount: 2,
+            bloodType: "AB-",
+            transfusionProtocol: "RAS",
+            transfusionTime: "2018-10-19T16:16:30Z"
+          },
+          urgency: "low",
+      };
+
     this.on('route', identificationKey => {
       this.identificationKey = identificationKey;
+      this.prescription.order.id = identificationKey;
       this.update();
     });
 
     this.on('mount', () => {
       Suivi.fetchPrescription(this.identificationKey)
         .then(res => {
-          this.prescription = res[0];
-          console.log(res[0]);
+          //this.prescription = res[0];
+          //console.log(res[0]);
         });
     });
   </script>
