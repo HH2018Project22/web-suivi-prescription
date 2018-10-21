@@ -1,5 +1,5 @@
 <suivi-list>
-  <table class="table">
+  <table class="table table-bordered table-hover">
     <thead>
       <tr>
         <th>Urgences</th>
@@ -11,13 +11,18 @@
       </tr>
     </thead>
     <tbody>
-      <tr each={pres,key in prescriptions}>
-        <td class="font-weight-bold">{ emergencyBadge(pres.prescription.urgency) }</td>
+      <tr each={pres,key in prescriptions} class="bg-{ emergencyShemeColor(pres.prescription.urgency) }">
+        <td class="text-center text-{emergencySchemeColor(pres.prescription.urgency)}" width="180px">
+          <span class="text-uppercase font-weight-bold">
+            <i class="fas fa-exclamation-circle" if={ pres.prescription.urgency == 'emergency'}></i>
+            { emergencyBadge(pres.prescription.urgency) }
+          </span>
+        </td>
         <td>{ moment(pres.prescription.order.transfusionTime).format('LLL') }</td>
         <td>{ pres.prescription.order.bloodType }</td>
-        <td>{ pres.prescription.patient.sex }</td>
+        <td>{ getGender(pres.prescription.patient.sex) }</td>
         <td>{ calculAge(pres.prescription.patient.birthDate) }</td>
-        <td><a href="#/prescription/{pres.hash}/detail" class="btn btn-primary btn-block btn-sm"><i class="fa fa-eye"></i> Voir</a></td>
+        <td><a href="#/prescription/{pres.hash}/detail" class="btn btn-primary btn-block"><i class="fa fa-eye"></i> Voir le détail</a></td>
       </tr>
     </tbody>
   </table>
@@ -34,16 +39,79 @@
         default      : return 'Autre';
       }
     }
+    this.prescriptions = [
+      { 
+        hash: "123456", 
+        prescription: {
+          patient: {
+            firstName: "Jane",
+            lastName: "Doe",
+            useName: "Doe",
+            birthDate: "1988-01-01",
+            sex: "female"
+          },
+          prescriptor: {
+            firstName: "Doctor",
+            lastName: "Who",
+            service: "Time Lords"
+          },
+          order: {
+            id: "1",
+            amount: 2,
+            bloodType: "AB-",
+            transfusionProtocol: "RAS",
+            transfusionTime: "2018-10-19T16:16:30Z"
+          },
+          urgency: "low",
+        }
+      },
+      { 
+        hash: "654321", 
+        prescription: {
+          patient: {
+            firstName: "Jane",
+            lastName: "Doe",
+            useName: "Doe",
+            birthDate: "1988-01-01",
+            sex: "female"
+          },
+          prescriptor: {
+            firstName: "Doctor",
+            lastName: "Who",
+            service: "Time Lords"
+          },
+          order: {
+            id: "1",
+            amount: 2,
+            bloodType: "AB-",
+            transfusionProtocol: "RAS",
+            transfusionTime: "2018-10-19T16:16:30Z"
+          },
+          urgency: "emergency",
+        }
+      }
+    ]
     emergencySchemeColor = function(emergencyLevel) {
-      let classNames = '';
       if (emergencyLevel === 'low') {
-        classNames += 'bg-success';
+        classNames = 'success';
       }
       if (emergencyLevel === 'high') {
-        classNames += 'bg-warning';
+        classNames = 'warning';
       }
       if (emergencyLevel === 'emergency') {
-        classNames += 'bg-danger';
+        classNames = 'danger';
+      }
+      return classNames; 
+    }
+    emergencyIcon = function(emergencyLevel) {
+      if (emergencyLevel === 'low') {
+        classNames = 'fa-bars';
+      }
+      if (emergencyLevel === 'high') {
+        classNames = 'fa-exclamation-circle';
+      }
+      if (emergencyLevel === 'emergency') {
+        classNames = 'fa-exclamation-circle';
       }
       return classNames; 
     }
@@ -51,13 +119,13 @@
     emergencyBadge = function(emergencyLevel) {
       let badge = '';
       if (emergencyLevel === 'low') {
-        badge += 'Priorité normale';
+        badge += 'normale';
       }
       if (emergencyLevel === 'high') {
-        badge += 'Priorité haute';
+        badge += 'haute';
       }
       if (emergencyLevel === 'emergency') {
-        badge += 'Priorité vitale';
+        badge += 'vitale';
       }
       
       return badge;
@@ -66,7 +134,7 @@
     
     Suivi.Store.on('prescriptions', () => this.update());
     this.on('before-mount', () => {
-      this.prescriptions = [];
+      this.prescriptions = this.prescriptions;
     })
 
     Suivi.prescriptions()

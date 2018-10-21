@@ -12,7 +12,8 @@
       <section class="col-sm-3 offset-sm-3 mb-4">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Mr. Sébastien SIMONOT</h5>
+            <h5 class="card-title">Pris en charge par</h5>
+            <p class="font-weight-bold mb-0">Mr. Sébastien SIMONOT</p>
             <ul class="text-muted list-inline">
               <li class="list-inline-item"><i class="fas fa-phone mr-2"></i> 0600000000</li>
               <li class="list-inline-item"><i class="fas fa-map-marker-alt"></i> Bureau 221</li>
@@ -27,7 +28,7 @@
           <suivi-progressbar />
           <div class="card">
             <div class="card-header">
-              Informations patient
+              <i class="fas fa-user mr-2"></i>Informations patient
             </div>
             <div class="card-body">
               <dl class="row mb-0">
@@ -42,7 +43,7 @@
               </dl>
             </div>
             <div class="card-header border-top bg-danger text-white">
-              <i class="fas fa-box"></i> Informations commande
+              <i class="fas fa-box mr-2"></i> Informations commande
             </div>
             <div class="card-body">
               <dl class="row mb-0">
