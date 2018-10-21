@@ -1,0 +1,38 @@
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width" />
+      <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+      <link rel="stylesheet" href="./styles/progress.css" type="text/css" media="screen" title="no title" charset="utf-8">
+      <link rel="stylesheet" href="./styles/breadcrumb.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+      <title>Suivi des demandes</title>
+    </head>
+    <body>
+
+    <suivi-app></suivi-app>
+
+    <!-- Components -->
+    <script src="./js/tags/app.tag" type="riot/tag"></script>
+    <script src="./js/tags/suivi-homepage.tag" type="riot/tag"></script>
+    <script src="./js/tags/suivi-navbar.tag" type="riot/tag"></script>
+    <script src="./js/tags/suivi-list.tag" type="riot/tag"></script>
+    <script src="./js/tags/suivi-detail.tag" type="riot/tag"></script>
+    <script src="./js/tags/suivi-progressbar.tag" type="riot/tag"></script>
+    <script src="./js/tags/suivi-breadcrumb.tag" type="riot/tag"></script>
+
+     <!-- lib -->
+    <script src="./node_modules/moment/min/moment-with-locales.min.js" charset="utf-8"></script>
+    <script src="https://rawgit.com/riot/riot/master/riot+compiler.min.js"></script>
+    <script src="https://rawgit.com/riot/route/master/dist/route+tag.min.js"></script>
+    <script src="./js/lib/store.js"></script>
+    <script src="./js/lib/suivi.js"></script>
+    <script type="text/javascript">
+       moment.locale('fr');
+       riot.mount('*');
+    </script>
+    </body>
+  </html>
