@@ -6,8 +6,8 @@
   <section class="container-fluid">
     <section class="row">
       <section class="col-sm-6">
-        <h1><span class="badge badge-success">Priorité normale</span> Prescription n°<strong>{prescription.order.id}</strong></h1>
-        <p class="h4"><small class="text-muted"><i class="fas fa-user-md mr-2"></i>Docteur anesthésite John Doe - Chirurgie - CHU de DIJON</small></p>
+        <h1><span class="badge badge-success">{priority()}</span> Prescription n°<strong>{prescription.order.id}</strong></h1>
+        <p class="h4"><small class="text-muted"><i class="fas fa-user-md mr-2"></i>{prescriptor()}</small></p>
       </section>
       <section class="col-sm-3 offset-sm-3 mb-4">
         <div class="card">
@@ -25,7 +25,7 @@
     <section class="row mb-4">
       <section class="col-sm-7 mb-4">
         <section class="position-sticky sticky-top mt-4">
-          <suivi-progressbar />
+          <suivi-progressbar notifications={notifications} />
           <div class="card">
             <div class="card-header">
               <i class="fas fa-user mr-2"></i>Informations patient
@@ -68,43 +68,36 @@
     </section>
   </section>
   <script>
-    this.identificationKey;
-    this.prescription = 
-      { 
-          patient: {
-            firstName: "Jane",
-            lastName: "Doe",
-            useName: "Doe",
-            birthDate: "1988-01-01",
-            sex: "female"
-          },
-          prescriptor: {
-            firstName: "Doctor",
-            lastName: "Who",
-            service: "Time Lords"
-          },
-          order: {
-            id: '',
-            amount: 2,
-            bloodType: "AB-",
-            transfusionProtocol: "RAS",
-            transfusionTime: "2018-10-19T16:16:30Z"
-          },
-          urgency: "low",
-      };
+    this.prescription = null;
 
     this.on('route', identificationKey => {
       this.identificationKey = identificationKey;
-      this.prescription.order.id = identificationKey;
-      this.update();
     });
 
     this.on('mount', () => {
       Suivi.fetchPrescription(this.identificationKey)
         .then(res => {
-          //this.prescription = res[0];
-          //console.log(res[0]);
+          this.prescription = res;
+          this.update();
+        });
+      Suivi.fetchNotifications(this.identificationKey)
+        .then(res => {
+          this.notifications = res;
+          this.update();
         });
     });
+
+    priority() {
+      if (!this.prescription) return "Priorité normale";
+      if (this.prescription.urgency === 'low') return "Priorité normale";
+      if (this.prescription.urgency === 'high') return "Priorité haute";
+      if (this.prescription.urgency === 'emergency') return "Priorité vitale";
+    }
+
+    prescriptor() {
+      if (!this.prescription) return "--";
+      const { prescriptor } = this.prescription;
+      return `${prescriptor.firstName} ${prescriptor.lastName} - ${prescriptor.service}`;
+    }
   </script>
 </suivi-detail>

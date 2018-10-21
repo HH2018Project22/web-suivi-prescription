@@ -40,8 +40,8 @@
       }
     }
     this.prescriptions = [
-      { 
-        hash: "123456", 
+      {
+        hash: "123456",
         prescription: {
           patient: {
             firstName: "Jane",
@@ -65,8 +65,8 @@
           urgency: "low",
         }
       },
-      { 
-        hash: "654321", 
+      {
+        hash: "654321",
         prescription: {
           patient: {
             firstName: "Jane",
@@ -101,7 +101,7 @@
       if (emergencyLevel === 'emergency') {
         classNames = 'danger';
       }
-      return classNames; 
+      return classNames;
     }
     emergencyIcon = function(emergencyLevel) {
       if (emergencyLevel === 'low') {
@@ -113,7 +113,7 @@
       if (emergencyLevel === 'emergency') {
         classNames = 'fa-exclamation-circle';
       }
-      return classNames; 
+      return classNames;
     }
 
     emergencyBadge = function(emergencyLevel) {
@@ -127,11 +127,11 @@
       if (emergencyLevel === 'emergency') {
         badge += 'vitale';
       }
-      
+
       return badge;
-      
+
     }
-    
+
     Suivi.Store.on('prescriptions', () => this.update());
     this.on('before-mount', () => {
       this.prescriptions = this.prescriptions;
@@ -143,7 +143,7 @@
         this.update();
         console.log(res);
       });
-    
+
     //this.prescriptions = [
     //  {
     //    created_at: Date.now(),

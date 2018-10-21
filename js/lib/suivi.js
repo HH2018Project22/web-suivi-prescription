@@ -1,6 +1,6 @@
 (function(Suivi) {
 
-  const BASE_URL = 'https://hhp22-tcornaut.localtunnel.me';
+  const BASE_URL = 'http://localhost:3000';
 
   Suivi.prescriptions = function() {
     return fetch(`${BASE_URL}/prescriptions`)
@@ -30,6 +30,16 @@
       })
     ;
   };
+
+  Suivi.fetchNotifications = function(key) {
+    return fetch(`${BASE_URL}/prescriptions/${key}/notifications`)
+      .then(res => res.json())
+      .then(res => {
+        if(res.error) return null;
+        return res;
+      })
+    ;
+  }
 
 }(window.Suivi = window.Suivi || {}))
 
